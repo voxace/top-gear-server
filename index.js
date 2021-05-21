@@ -34,7 +34,6 @@ db.mongoose
     process.exit();
   });
 
-
 // routes
 const laptime = require('./routes/laptime')
 const leaderboard = require('./routes/leaderboard')
@@ -42,7 +41,7 @@ app.use('/api/laptime', laptime)
 app.use('/api/leaderboard', leaderboard)
 
 // listening port
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
