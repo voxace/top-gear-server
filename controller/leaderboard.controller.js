@@ -18,12 +18,13 @@ exports.create = (req, res) => {
 
   // Save leaderboard in the database
   leaderboard
-    .save(leaderboard)
+    .save()
     .then(data => {
-      res.send(data);
+      res.status(200).send(data);
       console.log(data);
     })
     .catch(err => {
+      console.log(err);
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the leaderboard."
