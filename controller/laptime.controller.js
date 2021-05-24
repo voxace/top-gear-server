@@ -18,13 +18,13 @@ exports.create = (req, res) => {
   };
 
   // Create a laptime
-  const laptime = new LapTime({
+  const laptime = {
     name: req.body.name,
     minutes: req.body.minutes,
     seconds: req.body.seconds,
     ms: req.body.ms,
     leaderboard: req.body.leaderboard
-  });
+  };
 
   LapTime
     .findOneAndUpdate(filter, laptime, {
