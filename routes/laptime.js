@@ -23,7 +23,7 @@ router.put("/:id", laptime.update);
 // Delete a laptime with id
 router.delete("/:id", laptime.delete);
 
-// Delete all laptimes
-router.delete("/", laptime.deleteAll);
+// Delete a laptime by leaderboard id
+router.delete("/leaderboard/:id", laptime.deleteByLeaderboard);
 
 module.exports = router

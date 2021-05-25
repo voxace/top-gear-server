@@ -126,23 +126,6 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all laptimes from the database.
-exports.deleteAll = (req, res) => {
-  LapTime
-    .deleteMany({})
-    .then(data => {
-      res.send({
-        message: `${data.deletedCount} LapTimes were deleted successfully!`
-      });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all laptimes."
-      });
-    });
-};
-
 // Find all laptimes by leaderboard
 exports.findByLeaderboard = (req, res) => {
   LapTime
@@ -157,6 +140,24 @@ exports.findByLeaderboard = (req, res) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving laptimes."
+      });
+    });
+};
+
+// Delete a laptime with the specified id in the request
+exports.deleteByLeaderboard = (req, res) => {
+  const id = req.params.id;
+
+  LapTime
+    .deleteMany({ leaderboard: id })
+    .then(data => {
+      res.send({
+        message: "Laptimes were deleted successfully!"
+      });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete laptimes with leaderboard id=" + id
       });
     });
 };

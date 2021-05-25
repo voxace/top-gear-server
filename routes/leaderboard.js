@@ -20,7 +20,4 @@ router.put("/:id", leaderboard.update);
 // Delete a leaderboard with id
 router.delete("/:id", leaderboard.delete);
 
-// Delete all leaderboards
-router.delete("/", leaderboard.deleteAll);
-
 module.exports = router
