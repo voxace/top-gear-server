@@ -58,6 +58,21 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Retrieve all laptimes for a particular driver.
+exports.findDriver = (req, res) => {
+  LapTime
+    .find({ name: { $regex: '.*' + req.query.search + '.*' } })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving laptimes."
+      });
+    });
+};
+
 // Find a single laptime with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;

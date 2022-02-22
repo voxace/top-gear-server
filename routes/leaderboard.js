@@ -11,6 +11,12 @@ router.post("/", leaderboard.create);
 // Retrieve all leaderboards
 router.get("/", leaderboard.findAll);
 
+// Retrieve all leaderboards
+router.get("/track", leaderboard.findTrack);
+
+// Retrieve all leaderboards
+router.get("/car", leaderboard.findCar);
+
 // Retrieve a single leaderboard with id
 router.get("/:id", leaderboard.findOne);
 

@@ -1,5 +1,7 @@
+const mongoose = require("mongoose");
 const db = require("../models");
 const Leaderboard = db.leaderboard;
+const LapTime = db.laptime;
 
 // Create and Save a new leaderboard
 exports.create = (req, res) => {
@@ -48,7 +50,60 @@ exports.findAll = (req, res) => {
             err.message || "Some error occurred while retrieving leaderboards."
         });
       });
+};
 
+// Retrieve all leaderboards for a particular track.
+exports.findTrack = (req, res) => {  
+  
+  let formattedData = [];
+  Leaderboard.find({ track: { $regex: '.*' + req.query.search + '.*' } })
+    .then(data => {
+      let itemsProcessed = 0;
+      data.forEach((element, index, array) => {
+        LapTime
+        .find({ leaderboard: new mongoose.Types.ObjectId(element._id) })
+        .populate('leaderboard')
+        .sort({minutes: 1, seconds: 1, ms: 1})
+        .then(subdata => {
+          itemsProcessed++;
+          subdata.forEach(item => {
+            formattedData.push({
+              "track": item.leaderboard.track,
+              "car": item.leaderboard.car,
+              "driver": item.name,
+              "lapTime": item.minutes + ":" + item.seconds + ":" + item.ms
+            });
+          });
+        })
+        .then(() => {
+          console.log(formattedData);
+          if(itemsProcessed == array.length) {
+            res.send(formattedData);
+          }
+        })
+      });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Could not find any matching leaderboards."
+      });
+    });
+};
+
+// Retrieve all leaderboards for a particular car.
+exports.findCar = (req, res) => {
+
+  Leaderboard.find({ car: { $regex: '.*' + req.query.search + '.*' } })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving leaderboards."
+      });
+    });
 };
 
 // Find a single leaderboard with an id

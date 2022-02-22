@@ -11,6 +11,9 @@ router.post("/", laptime.create);
 // Retrieve all laptimes
 router.get("/", laptime.findAll);
 
+// Retrieve all laptimes for driver
+router.get("/driver", laptime.findDriver);
+
 // Retrieve all published laptimes
 router.get("/leaderboard", laptime.findByLeaderboard);
 
